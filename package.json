@@ -3,19 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
   "workspaces": [
     "packages/*",
     "apps/api",
     "apps/web"
   ],
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present",
+    "dev": "pnpm --recursive --if-present dev",
     "dev:agent": "cd apps/agent && python3 main.py",
-    "build": "npm run build --workspaces --if-present",
-    "typecheck": "npm run build -w packages/shared && npm run typecheck --workspaces --if-present",
-    "start:api": "npm run start -w apps/api",
+    "build": "pnpm --recursive --if-present build",
+    "typecheck": "pnpm --filter @personal-agent/shared build && pnpm --recursive --if-present typecheck",
+    "start:api": "pnpm --filter @personal-agent/api start",
     "start:agent": "cd apps/agent && python3 main.py",
-    "start:web": "npm run preview -w apps/web"
+    "start:web": "pnpm --filter @personal-agent/web preview"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",

@@ -1,5 +1,16 @@
 import React, { FormEvent, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 import "./styles.css";
 
 type ChatResponse = {
@@ -47,8 +58,8 @@ function App() {
     <main className="shell">
       <section className="workspace">
         <div className="status-bar">
-          <span>Personal Agent</span>
-          <span>Web → API → Agent</span>
+          <Badge variant="secondary">Personal Agent</Badge>
+          <Badge variant="outline">Web → API → Agent</Badge>
         </div>
 
         <div className="hero">
@@ -59,21 +70,34 @@ function App() {
         </div>
 
         <form className="composer" onSubmit={submitMessage}>
-          <textarea
+          <Textarea
             aria-label="Message"
+            className="min-h-32 bg-background text-base leading-7"
             value={message}
             onChange={(event) => setMessage(event.target.value)}
             rows={5}
           />
-          <button type="submit" disabled={isLoading || !message.trim()}>
+          <Button className="justify-self-end" type="submit" disabled={isLoading || !message.trim()}>
             {isLoading ? "发送中..." : "发送"}
-          </button>
+          </Button>
         </form>
 
-        <section className="response" aria-live="polite">
-          {error ? <p className="error">{error}</p> : null}
-          {reply ? <p>{reply}</p> : <p className="muted">Agent 回复会显示在这里。</p>}
-        </section>
+        {error ? (
+          <Alert className="mt-5" variant="destructive">
+            <AlertTitle>请求失败</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        ) : null}
+
+        <Card className="mt-5" aria-live="polite">
+          <CardHeader>
+            <CardTitle>Agent 回复</CardTitle>
+            <CardDescription>当前仍是基础链路占位响应。</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {reply ? <p className="leading-7">{reply}</p> : <p className="muted">Agent 回复会显示在这里。</p>}
+          </CardContent>
+        </Card>
       </section>
     </main>
   );

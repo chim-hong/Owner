@@ -1,1 +1,9 @@
-# No third-party runtime dependencies yet.
+langgraph
+langchain
+langchain-core
+langchain-openai
+langchain-community
+langsmith
+openai
+python-dotenv
+pydantic
