@@ -1,0 +1,24 @@
+{
+  "name": "personal-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "dev:agent": "cd apps/agent && python3 main.py",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run build -w packages/shared && npm run typecheck --workspaces --if-present",
+    "start:api": "npm run start -w apps/api",
+    "start:agent": "cd apps/agent && python3 main.py",
+    "start:web": "npm run preview -w apps/web"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.3"
+  }
+}
