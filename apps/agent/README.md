@@ -5,7 +5,7 @@ Python Agent 服务，负责 AI / Agent 能力。
 ## 本地启动
 
 ```bash
-python3 main.py
+uvicorn main:app --reload --host 0.0.0.0 --port 4000
 ```
 
 接口：
