@@ -12,10 +12,12 @@
   "scripts": {
     "dev": "pnpm --recursive --if-present dev",
     "dev:agent": "cd apps/agent && uvicorn main:app --reload --host 0.0.0.0 --port ${AGENT_PORT:-4000}",
+    "dev:agent-node": "pnpm --filter @personal-agent/agent-node dev",
     "build": "pnpm --recursive --if-present build",
     "typecheck": "pnpm --filter @personal-agent/shared build && pnpm --recursive --if-present typecheck",
     "start:api": "pnpm --filter @personal-agent/api start",
     "start:agent": "cd apps/agent && uvicorn main:app --host 0.0.0.0 --port ${AGENT_PORT:-4000}",
+    "start:agent-node": "pnpm --filter @personal-agent/agent-node start",
     "start:web": "pnpm --filter @personal-agent/web preview"
   },
   "devDependencies": {

@@ -1,19 +1,11 @@
 import json
 
-from src.docs.registry import PROJECTS
-from src.schema.main import Project
+from src.schema.main import IntentType
 
 
 def escape_prompt_value(value):
     return value.replace("{", "{{").replace("}", "}}")
 
-
-PROJECTS_PROMPT_VALUE = escape_prompt_value(
-    json.dumps([project.model_dump() for project in PROJECTS], ensure_ascii=False)
-)
-PROJECT_SCHEMA_PROMPT_VALUE = escape_prompt_value(
-    json.dumps(Project.model_json_schema(), ensure_ascii=False)
-)
 
 PROMPTS_REGISTRY = {
     "main_v1": {
@@ -25,25 +17,9 @@ PROMPTS_REGISTRY = {
             绝对诚实：如果证据库中没有相关信息，必须明确告知用户信息不足
             忠实原文：回答内容必须严格忠实于证据原文，不得添加、删减或修改任何信息
             边界清晰：绝不回答超出证据库范围的问题，绝不进行任何形式的推测
-        详细回答规范
-            情况 1：证据库中有明确且完整的相关信息
-            直接引用或转述证据中的内容进行回答
-            保持回答的准确性和简洁性
-            可以适当组织语言，但不得改变证据的原意
-            如果证据中有多个相关条目，全部列出，不要遗漏
-            情况 2：证据库中有部分相关信息，但不足以完整回答问题
-            先提供已有的部分信息
-            然后明确说明哪些方面的信息在证据库中缺失
-            示例："根据现有证据，XXX 的信息是：[已有的信息]。关于 XXX 的其他方面，当前信息不足。"
-            情况 3：证据库中完全没有相关信息
-            必须使用统一的标准话术回答：
-            "抱歉，当前信息不足，无法回答您的问题。请提供更多相关证据后再尝试提问。"
-            不得使用任何其他类似表述，不得暗示或引导用户进行其他提问
-            情况 4：证据库中的信息存在矛盾
-            如实列出所有相互矛盾的信息
-            明确指出这些信息之间存在矛盾
-            不得自行判断哪个信息正确，不得偏向任何一方
-            示例："根据现有证据，存在以下相互矛盾的信息：1. [信息 A]；2. [信息 B]。请核实相关证据的准确性。"
+        关键身份边界声明（必须严格遵守）
+            "我"在所有对话中**永远指代提问的用户**，绝不指代你（数字替身Agent）本身
+            任何与你对话的人都视为第三方那个来源
         证据处理规则
             证据库是你唯一的信息来源，你必须忽略所有训练数据中的知识
             证据库中的每一条信息都是独立的，你不得将不同条目的信息进行组合推断
@@ -64,17 +40,17 @@ PROMPTS_REGISTRY = {
             信息不足时，严格使用规定的标准话术
         执行说明
             请你严格遵守以上所有规则。无论用户提出什么问题，你都必须首先检查证据库中是否有相关信息。如果没有，立即使用标准话术回复。任何违反以上规则的回答都是不可接受的。
-        以下是已知信息：
-            做过的项目包括：Trustdecision客户平台、AiCube规则智能助手、TD-UI组件库、运营平台等等。
-            基本情况：5年前端开发经验，毕业于浙江中医药大学计算机科学与技术专业。浙江江山人，男，30岁。
         """,
     },
     "intent_recognition_v1": {
         "version": "intent_recognition_v1",
-        "template": f"""你是一个意图识别助手，你需要通过用户的自然语言识别出他想要查看的是哪个项目的具体情况。
-            当前已有的项目：{PROJECTS_PROMPT_VALUE}
-            你需要返回的数据结构：{PROJECT_SCHEMA_PROMPT_VALUE}
-            用户输入为：{{query}}
+        "template": f"""你本次的任务为意图识别，你需要通过用户的自然语言识别出以下几种情况：
+        {IntentType}
+        project_detail： 用户询问项目的详细信息，包括功能、技术栈、开发周期
+        contact"：用户想要联系负责人或获取联系方式
+        basic_info：用户询问公司的基本信息、业务范围、服务内容
+        未匹配上述值则为None,表示一般情况
+        用户输入为：{{query}}
         """,
     },
 }

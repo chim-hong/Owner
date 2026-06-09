@@ -32,12 +32,9 @@ def chat(request: ChatRequest):
         raise HTTPException(status_code=400, detail="message is required")
 
     def stream():
-        try:
-            results = main_service(request.message, request.thread_id)
-            yield from adapter_deepseek_stream_to_format(results)
-            yield stream_event({"event": "done", "data": {"content": "传输完毕"}})
-        except Exception as exc:
-            yield stream_event({"event": "done", "data": "传输失败"})
+        results = main_service(request.message, request.thread_id)
+        yield from adapter_deepseek_stream_to_format(results)
+        yield stream_event({"event": "done", "data": {"content": "传输完毕"}})
 
     return StreamingResponse(
         stream(),

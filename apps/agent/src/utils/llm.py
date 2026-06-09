@@ -35,5 +35,4 @@ def call_llm(config: CallLLM):
     if config.tools:
         return chat_client.bind_tools(config.tools).invoke(config.messages)
     result = thinking_client.invoke(config.messages)
-    print("llm type thinking")
     return result

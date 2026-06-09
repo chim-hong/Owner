@@ -6,6 +6,7 @@ from src.schema.tools import GetProjectDetailInputSchema, ProjectDetailResult
 PROJECT_DOCS_DIR = Path(__file__).resolve().parents[1] / "docs"
 PROJECT_DOC_MAP = {
     "trustdecision-portal": "trustDecision_portal.md",
+    "basic_info": "basic_info.json",
 }
 
 
@@ -40,3 +41,14 @@ def get_project_detail(project_name) -> ProjectDetailResult:
     result["content"] = doc_path.read_text(encoding="utf-8")
     result["success"] = True
     return result
+
+
+@tool
+def get_contact() -> ProjectDetailResult:
+    """获取联系方式
+
+    Returns:
+        str: 联系方式
+    """
+
+    return ProjectDetailResult(success=True, content="123@tongdun.net")

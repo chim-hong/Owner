@@ -1,0 +1,72 @@
+{
+  "name": "Chimhong",
+  "target_role": "Agent开发工程师/高级前端开发工程师",
+  "background": "5年前端开发+1年Agent开发",
+  "skills": [
+    "React",
+    "Nodejs",
+    "css",
+    "webpack",
+    "langChain",
+    "langGraph",
+    "Html",
+    "javascript",
+    "typescript"
+  ],
+  "projects": [
+    {
+      "project_id": "trustdecision_portal",
+      "project_name": "Trustdecision Portal客户平台",
+      "role": "核心开发",
+      "description": "一个风控类型的客户平台，用于客户管理数据",
+      "keywords": [
+        "React18",
+        "typescript",
+        "webpack",
+        "Vite",
+        "zustand",
+        "多租户",
+        "多版本",
+        "动态路由",
+        "权限控制"
+      ]
+    },
+    {
+      "project_id": "trustdecision_oper",
+      "project_name": "Trustdecision Oper运营平台",
+      "role": "核心开发",
+      "description": "一个风控类型的运营平台，用于运营管理数据和操作",
+      "keywords": [
+        "React18",
+        "typescript",
+        "webpack",
+        "Vite",
+        "zustand"
+      ]
+    },
+    {
+      "project_id": "aicube",
+      "project_name": "aicube 智能规则助手",
+      "role": "核心开发/合作开发",
+      "description": "客户通过自然语言提交规则配置需求，智能助手通过分析后，返回可配置的规则列表",
+      "keywords": [
+        "langGraph",
+        "langChain",
+        "python",
+        "rag",
+        "权限控制"
+      ]
+    },
+    {
+      "project_id": "tdui",
+      "project_name": "TD-UI业务组件库",
+      "role": "独立开发",
+      "description": "业务类型组件库封装，提升研发人员页面搭建速度，提升效果50%+",
+      "keywords": [
+        "dumi",
+        "组件规范",
+        "业务组件封装"
+      ]
+    }
+  ]
+}
